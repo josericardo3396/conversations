@@ -1,44 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-commerce Example</title>
+  <title>E-commerce de Viajes</title>
   <style>
     body {
       font-family: Arial, sans-serif;
     }
-    .product-container {
-      width: 300px;
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      margin: 0 auto;
-      margin-top: 50px;
     }
-    .product-image {
-      width: 200px;
+    header a {
+      color: white;
+      text-decoration: none;
+      margin-right: 10px;
     }
-    .product-title {
-      margin-top: 20px;
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background-color: #f1f1f1;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+    .card h2 {
+      margin-top: 10px;
       font-size: 24px;
-      text-align: center;
     }
-    .product-price {
-      font-size: 18px;
-      font-weight: bold;
-      color: #4CAF50;
+    .card p {
+      font-size: 16px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="product-container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg/1200px-Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg" alt="Product Image" class="product-image">
-    <h2 class="product-title">Example Product</h2>
-    <p class="product-price">$1,999.00</p>
+  <header>
+    <h1>E-commerce de Viajes</h1>
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Sobre nosotros</a>
+      <a href="#">Viajes</a>
+    </nav>
+  </header>
+  <div class="card-container">
+    <!-- Repetir el siguiente bloque de código 10 veces para mostrar 10 tarjetas -->
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg/1200px-Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg" alt="Hospedaje en París">
+      <h2>Hospedaje en París</h2>
+      <p>Disfruta de una estancia en el corazón de París con este hermoso apartamento.</p>
+    </div>
+    <!-- Fin del bloque de código repetido -->
+<!-- Repetir el siguiente bloque de código 10 veces para mostrar 10 tarjetas -->
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg/1200px-Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg" alt="Hospedaje en París">
+      <h2>Hospedaje en París</h2>
+      <p>Disfruta de una estancia en el corazón de París con este hermoso apartamento.</p>
+    </div>
+    <!-- Fin del bloque de código repetido -->
+<!-- Repetir el siguiente bloque de código 10 veces para mostrar 10 tarjetas -->
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg/1200px-Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg" alt="Hospedaje en París">
+      <h2>Hospedaje en París</h2>
+      <p>Disfruta de una estancia en el corazón de París con este hermoso apartamento.</p>
+    </div>
+    <!-- Fin del bloque de código repetido -->
+<!-- Repetir el siguiente bloque de código 10 veces para mostrar 10 tarjetas -->
+    <div class="card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg/1200px-Apple_MacBook_Pro_15_Inch_Early_2013_with_Retina_Display.jpg" alt="Hospedaje en París">
+      <h2>Hospedaje en París</h2>
+      <p>Disfruta de una estancia en el corazón de París con este hermoso apartamento.</p>
+    </div>
+    <!-- Fin del bloque de código repetido -->
   </div>
-  <div id="beplic-content" page-id="l2IgkepBv6tXemdIgltFwfUv6"></div>
-<script type="text/javascript" src="https://conversationsqa.fromdoppler.net/assets/content/js/qa-beplic-external-chat.js"></script>
 </body>
 </html>
 
