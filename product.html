@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Producto</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .product-card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            background-color: #f0f0f0;
+            /* Placeholder color */
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #1a1a1a;
+            text-transform: capitalize;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .btn-buy {
+            background-color: #0088cc;
+            /* Instagram/Blue color */
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #0077b5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="product-card">
+        <img id="p-image" class="product-image" src="" alt="Cargando imagen...">
+        <h1 id="p-name" class="product-name">Cargando producto...</h1>
+        <div id="p-price" class="product-price"></div>
+        <button class="btn-buy" onclick="alert('Funcionalidad de compra próximamente')">Comprar Ahora</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener parámetros de la URL
+            const params = new URLSearchParams(window.location.search);
+
+            const name = params.get('name');
+            const price = params.get('price');
+            const image = params.get('image');
+
+            // Elementos del DOM
+            const imgEl = document.getElementById('p-image');
+            const nameEl = document.getElementById('p-name');
+            const priceEl = document.getElementById('p-price');
+
+            // Actualizar interfaz
+            if (name) nameEl.textContent = name;
+
+            if (price) {
+                // Formato de moneda simple
+                priceEl.textContent = `$${price}`;
+            }
+
+            if (image) {
+                imgEl.src = image;
+                imgEl.alt = name || 'Producto';
+            } else {
+                imgEl.style.display = 'none';
+            }
+
+            // Actualizar título de la página
+            if (name) document.title = name + " - Tienda";
+        });
+    </script>
+</body>
+
+</html>
