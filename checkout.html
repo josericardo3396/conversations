@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Confirmación de Compra</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-list {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            border: 1px solid #eee;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .product-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #000;
+        }
+
+        .coupon-box {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .validation-msg {
+            color: #0288d1;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+
+        // IMPORTANTE: Reemplaza 'TU_PIXEL_ID_AQUI' con tu ID real de Meta Pixel
+        //fbq('init', 'TU_PIXEL_ID_AQUI');
+        fbq('init', '3786546154738749');
+        fbq('track', 'PageView')
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=3786546154738749&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resumen de Compra</h1>
+
+        <div id="products" class="product-list">
+            <!-- Los productos se cargarán aquí dinámicamente -->
+            <p style="color: #888;">Cargando detalles del pedido...</p>
+        </div>
+
+        <div id="coupon-area" class="coupon-box">
+            <!-- Cupón se mostrará aquí -->
+        </div>
+
+        <div class="validation-msg">
+            Validación de Meta en curso...
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+
+            // REVISIÓN: Lógica principal para soportar el formato de Meta (Java style)
+            // Meta puede enviar: ?products=item1:2,item2:1&coupon=CODE
+            const productsParam = params.get('products');
+            const coupon = params.get('coupon') || params.get('coupon_code');
+
+            const productsContainer = document.getElementById('products');
+            const couponArea = document.getElementById('coupon-area');
+
+            let itemsToTrack = [];
+            let htmlContent = '';
+
+            // 1. Lógica de "products" (Lista separada por comas)
+            if (productsParam) {
+                // Equivalente al código Java: products.split(",") -> separar por ":"
+                const entries = productsParam.split(',');
+
+                entries.forEach(entry => {
+                    // entry ej: "gorra blanca:4"
+                    const parts = entry.split(':');
+                    if (parts.length >= 2) {
+                        const id = parts[0].trim();
+                        const qty = parseInt(parts[1]) || 1;
+
+                        itemsToTrack.push({ id: id, quantity: qty });
+
+                        htmlContent += `
+                        <div class="product-item">
+                            <div class="label">Producto ID:</div>
+                            <div class="value">${id}</div>
+                            <div class="label" style="margin-top:4px;">Cantidad:</div>
+                            <div class="value">${qty}</div>
+                        </div>
+                    `;
+                    }
+                });
+
+                // 2. Fallback: Lógica antigua para un solo item (?item_id=X&quantity=Y)
+            } else {
+                const itemId = params.get('item_id') || params.get('id');
+                const quantity = params.get('quantity');
+
+                if (itemId) {
+                    const qty = parseInt(quantity) || 1;
+                    itemsToTrack.push({ id: itemId, quantity: qty });
+
+                    htmlContent = `
+                    <div class="product-item">
+                        <div class="label">Producto ID:</div>
+                        <div class="value">${itemId}</div>
+                        <div class="label" style="margin-top:4px;">Cantidad:</div>
+                        <div class="value">${qty}</div>
+                    </div>
+                `;
+                }
+            }
+
+            // Renderizar Productos
+            if (itemsToTrack.length > 0) {
+                productsContainer.innerHTML = htmlContent;
+
+                // Integración Pixel: InitiateCheckout
+                // Enviamos todos los IDs y la suma de cantidades o items individuales
+                const contentIds = itemsToTrack.map(i => i.id);
+                const totalQty = itemsToTrack.reduce((acc, curr) => acc + curr.quantity, 0);
+
+                fbq('track', 'InitiateCheckout', {
+                    content_ids: contentIds,
+                    content_type: 'product',
+                    num_items: totalQty,
+                    currency: 'USD',
+                    value: 0.00
+                });
+                console.log("Evento InitiateCheckout enviado para:", contentIds);
+
+            } else {
+                productsContainer.innerHTML = '<p>No se detectaron productos en la URL.</p>';
+            }
+
+            // 3. Mostrar Cupón
+            if (coupon) {
+                couponArea.style.display = 'block';
+                couponArea.innerHTML = `<strong>Cupón Aplicado:</strong> ${coupon}`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
